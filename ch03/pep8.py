@@ -19,7 +19,7 @@ def convert_to_celsius(degrees, source='fahrenheit'):
     into degrees Celsius.
     """
     if source.lower() == 'fahrenheit':
-        return (degrees - 32) * 5/9
+        return (degrees-32) * 5/9
     elif source.lower() == 'kelvin':
         return degrees - 273.15
     else:

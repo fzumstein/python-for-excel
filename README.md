@@ -3,9 +3,7 @@ This is the companion repository for the upcoming book [Python for Excel](https:
 
 **NOTE**: This is currently work-in-progress and will continuously be updated/changed until the final release of the book. 
 
+The notebooks from chapters 1-5 can be run in the cloud: click on the `Binder` logo to run them - it's free and you don't need to install anything, but you can't save anything permanently.
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fzumstein/python-for-excel/master)
 
-[![Azure Notebooks](https://notebooks.azure.com/launch.png)](https://notebooks.azure.com/import/gh/fzumstein/python-for-excel)
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fzumstein/python-for-excel)

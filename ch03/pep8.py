@@ -29,5 +29,5 @@ def convert_to_celsius(degrees, source='fahrenheit'):
 celsius = convert_to_celsius(44, source='fahrenheit')
 non_celcius_scales = TEMPERATURE_SCALES[:-1]
 
-print('Start timestamp: ' + dt.datetime.now(tz.UTC).isoformat())
+print('Current time: ' + dt.datetime.now(tz.UTC).isoformat())
 print(f'The temperature in Celsius is: {celsius}')

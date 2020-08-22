@@ -8,7 +8,7 @@ this_dir = Path(__file__).parent
 # Read in all Excel files from all subfolders of sales_data
 parts = []
 for path in (this_dir / 'sales_data').rglob('*.xls*'):
-    part = pd.read_excel(path)
+    part = pd.read_excel(path, index_col='transaction_id')
     parts.append(part)
 
 # Combine the DataFrames from each file into a single DataFrame

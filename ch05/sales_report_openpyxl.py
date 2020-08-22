@@ -27,6 +27,13 @@ pivot = pd.pivot_table(df,
 summary = pivot.resample('M').sum()
 summary.index.name = 'Month'
 
+# Sort by total revenues per store
+summary = summary.loc[:, summary.sum().sort_values().index]
+
+# Add row and column totals
+summary.loc[:, 'Total'] = summary.sum(axis=1)
+summary = summary.append(summary.sum(axis=0).rename('Total'))
+
 # DataFrame position and number of rows/columns
 # openpxyl uses 1-based indices
 startrow = 3
@@ -81,13 +88,14 @@ with pd.ExcelWriter(this_dir / 'sales_report_openpyxl.xlsx',
     chart.type = "col"
     chart.title = "Sales per Month and Store"
     chart.height = 11.5
-    chart.width = 20
+    chart.width = 20.5
 
-    # Add the data and categories
+    # Add each column as a series, ignoring total row and col
     data = Reference(sheet, min_col=startcol + 1, min_row=startrow,
-                     max_row=startrow + nrows, max_col=startcol + ncols)
+                     max_row=startrow + nrows - 1,
+                     max_col=startcol + ncols - 1)
     categories = Reference(sheet, min_col=startcol, min_row=startrow + 1,
-                           max_row=startrow + nrows)
+                           max_row=startrow + nrows - 1)
     chart.add_data(data, titles_from_data=True)
     chart.set_categories(categories)
     cell = sheet.cell(row=startrow + nrows + 2, column=startcol)

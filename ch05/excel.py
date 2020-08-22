@@ -78,6 +78,7 @@ def read(sheet, first_cell='A1', last_cell=None):
                 row.append(value)
             values.append(row)
         return values
+
     # OpenPyXL
     elif openpyxl and isinstance(
             sheet,
@@ -96,6 +97,7 @@ def read(sheet, first_cell='A1', last_cell=None):
                                    values_only=True):
             data.append(list(row))
         return data
+
     # pyxlsb
     elif pyxlsb and isinstance(sheet, pyxlsb.worksheet.Worksheet):
         if not isinstance(first_cell, tuple):
@@ -111,7 +113,7 @@ def read(sheet, first_cell='A1', last_cell=None):
                         [first_cell[1] - 1:last_cell[1] if last_cell else None])
         return data
     else:
-        raise Exception("Couldn't handle this sheet object!")
+        raise TypeError(f"Couldn't handle {type(sheet)}")
 
 
 def write(sheet, values, first_cell='A1', date_format=None):
@@ -145,6 +147,7 @@ def write(sheet, values, first_cell='A1', date_format=None):
             for j, value in enumerate(row):
                 sheet.cell(row=first_cell[0] + i,
                            column=first_cell[1] + j).value = value
+
     # XlsxWriter
     elif xlsxwriter and isinstance(sheet, xlsxwriter.worksheet.Worksheet):
         assert date_format is None
@@ -154,6 +157,7 @@ def write(sheet, values, first_cell='A1', date_format=None):
             first_cell = xl_cell_to_rowcol(first_cell)
         for r, row_data in enumerate(values):
             sheet.write_row(first_cell[0] + r, first_cell[1], row_data)
+
     # xlwt
     elif xlwt and isinstance(sheet, xlwt.Worksheet):
         if date_format is None:
@@ -173,4 +177,4 @@ def write(sheet, values, first_cell='A1', date_format=None):
                     sheet.write(i + first_cell[0],
                                 j + first_cell[1], cell)
     else:
-        raise Exception("Couldn't handle this sheet object!")
+        raise TypeError(f"Couldn't handle {type(sheet)}")

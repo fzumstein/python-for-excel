@@ -22,6 +22,13 @@ pivot = pd.pivot_table(df,
 summary = pivot.resample('M').sum()
 summary.index.name = 'Month'
 
+# Sort by total revenues per store
+summary = summary.loc[:, summary.sum().sort_values().index]
+
+# Add row and column totals
+summary.loc[:, 'Total'] = summary.sum(axis=1)
+summary = summary.append(summary.sum(axis=0).rename('Total'))
+
 # DataFrame position and number of rows/columns
 # xlsxwriter uses 0-based indices
 startrow = 2
@@ -65,17 +72,17 @@ with pd.ExcelWriter(this_dir / 'sales_report_xlsxwriter.xlsx',
     # Chart
     chart = book.add_chart({'type': 'column'})
     chart.set_title({'name': 'Sales per Month and Store'})
-    chart.set_size({'width': 700, 'height': 450})
+    chart.set_size({'width': 830, 'height': 450})
     
-    # Add each column of the data table as a series
-    for col in range(1, ncols + 1):
+    # Add each column as a series, ignoring total row and col
+    for col in range(1, ncols):
         chart.add_series({
              # [sheetname, first_row, first_col, last_row, last_col]
             'name': ['Sheet1', startrow, startcol + col],
             'categories': ['Sheet1', startrow + 1, startcol,
-                           startrow + nrows, startcol],
+                           startrow + nrows - 1, startcol],
             'values': ['Sheet1', startrow + 1, startcol + col,
-                       startrow + nrows, startcol + col],
+                       startrow + nrows - 1, startcol + col],
         })
     # Chart formatting
     chart.set_x_axis({'name': summary.index.name,

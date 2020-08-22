@@ -7,3 +7,4 @@ pyxlsb
 xlrd
 xlwt
 xlutils
+modin[dask]

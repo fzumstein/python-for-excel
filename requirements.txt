@@ -1,5 +1,4 @@
 plotly>=4.8.0
-pandas
 matplotlib
 openpyxl
 xlsxwriter
@@ -7,4 +6,6 @@ pyxlsb
 xlrd
 xlwt
 xlutils
-modin[dask]
+# Modin requires a specific version of pandas
+modin[dask]==0.8.0
+pandas==1.0.5

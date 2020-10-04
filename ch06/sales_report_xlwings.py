@@ -32,10 +32,11 @@ summary = summary.loc[:, summary.sum().sort_values().index]
 summary.loc[:, 'Total'] = summary.sum(axis=1)
 summary = summary.append(summary.sum(axis=0).rename('Total'))
 
-# Open the template, paste the data and adjust the chart source.
-# Then save it under a different name.
+# Open the template, paste the data, autofit the columns
+# and adjust the chart source. Then save it under a different name.
 book = xw.Book(this_dir / 'sales_report_template.xlsx')
 sheet = book.sheets['Sheet1']
 sheet['B3'].value = summary
+sheet['B3'].expand().columns.autofit()
 sheet.charts['Chart 1'].set_source_data(sheet['B3'].expand()[:-1, :-1])
 book.save(this_dir / 'sales_report_xlwings.xlsx')

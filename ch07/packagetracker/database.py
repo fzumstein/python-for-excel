@@ -30,11 +30,14 @@ engine = sqlalchemy.create_engine(f'sqlite:///{db_path}')
 
 
 def get_packages():
+    """Get all packages as DataFrame"""
+
     return pd.read_sql_table("packages", con=engine, index_col='package_id')
 
 
 def store_package(package_name):
     """Insert a new package_name into the packages table"""
+
     try:
         with engine.connect() as con:
             con.execute(text("INSERT INTO packages (package_name) VALUES (:package_name)"),
@@ -48,6 +51,7 @@ def store_package(package_name):
 
 def get_versions(package_name):
     """Get all versions for the package with the name package_name"""
+
     sql = """
     SELECT v.uploaded_at, v.version_string
     FROM packages p
@@ -61,11 +65,13 @@ def get_versions(package_name):
 
 def store_versions(df):
     """Insert the records of the provided DataFrame df into the package_versions table"""
+
     df.to_sql('package_versions', con=engine, if_exists='append', index=False)
 
 
 def delete_versions():
     """Delete all records from the version table"""
+
     with engine.connect() as con:
         con.execute("DELETE FROM package_versions")
 
@@ -74,6 +80,7 @@ def create_db():
     """Run this function to create the database tables.
     In case of sqlite, this is also creating the database file.
     """
+
     sql_table_packages = """
     CREATE TABLE packages (
         package_id INTEGER PRIMARY KEY,
@@ -81,6 +88,7 @@ def create_db():
         UNIQUE(package_name)
     )
     """
+
     sql_table_versions = """
     CREATE TABLE package_versions (
         package_id INTEGER,
@@ -90,6 +98,7 @@ def create_db():
         FOREIGN KEY (package_id) REFERENCES packages (package_id)
     )
     """
+
     sql_statements = [sql_table_packages, sql_table_versions]
     with engine.connect() as con:
         for sql in sql_statements:

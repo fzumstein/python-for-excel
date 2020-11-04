@@ -36,13 +36,12 @@ def add_package():
         return
     # Insert the package name into the packages table
     error = database.store_package(package_name)
+    db_sheet['new_package'].clear_contents()
     # Show any errors, otherwise kick off a database update and
     # refresh the dropdown so you can select the new package
     if error:
-        db_sheet['new_package'].clear_contents()
         feedback_cell.value = f'Error: {error}'
     else:
-        db_sheet['new_package'].clear_contents()
         feedback_cell.value = f'Added {package_name} successfully.'
         update_database()
         refresh_dropdown()
@@ -123,7 +122,7 @@ def show_history():
     df_releases_yearly.index = df_releases_yearly.index.year
     df_releases_yearly.index.name = 'Years'
     df_releases_yearly = df_releases_yearly.rename(
-        columns={'version': 'Number of Releases'})
+        columns={'version_string': 'Number of Releases'})
     ax = df_releases_yearly.plot.bar(
         title=f"Number of Releases per Year "
               f"({tracker_sheet['package_selection'].value})")

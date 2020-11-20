@@ -5,5 +5,5 @@ This is the companion repository for the upcoming book [Python for Excel](https:
 
 The notebooks from chapters 1-5 can be run in the cloud: click on the `Binder` logo to run them - it's free and you don't need to install anything, but you can't save anything permanently.
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fzumstein/python-for-excel/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fzumstein/python-for-excel/main)
 

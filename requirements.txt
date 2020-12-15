@@ -1,11 +1,10 @@
-plotly>=4.8.0
-matplotlib
-openpyxl
-xlsxwriter
-pyxlsb
-xlrd
-xlwt
-xlutils
-# Modin requires a specific version of pandas
-modin[dask]==0.8.0
-pandas==1.0.5
+plotly==4.12.0
+matplotlib==3.3.2
+openpyxl==3.0.5
+xlsxwriter==1.3.7
+pyxlsb==1.0.6
+xlrd==1.2.0
+xlwt==1.3.0
+xlutils==2.0.0
+pandas==1.1.3
+pytrends==4.7.3

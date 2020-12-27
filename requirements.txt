@@ -1,4 +1,4 @@
-# This file is used by Binder
+# This file is used by mybinder.org
 # As this is Linux-based, xlwings can't be installed
 
 lxml==4.6.2

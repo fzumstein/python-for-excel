@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import pandas as pd
 from openpyxl.styles import Font, Alignment
 from openpyxl.formatting.rule import CellIsRule
@@ -6,8 +7,9 @@ from openpyxl.chart import BarChart, Reference
 from openpyxl.chart.shapes import GraphicalProperties
 from openpyxl.drawing.line import LineProperties
 
+
 # Directory of this file
-this_dir = Path(__file__).parent
+this_dir = Path(__file__).resolve().parent
 
 # Read in all files
 parts = []

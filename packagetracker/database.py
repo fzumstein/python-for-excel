@@ -22,8 +22,8 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 
 # We want the database file to sit next to this file.
 # Here, we are turning the path into an absolute path.
-this_dir = Path(__file__).parent
-db_path = Path(this_dir).resolve() / 'packagetracker.db'
+this_dir = Path(__file__).resolve().parent
+db_path = this_dir / 'packagetracker.db'
 
 # Database engine
 engine = sqlalchemy.create_engine(f'sqlite:///{db_path}')

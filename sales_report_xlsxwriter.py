@@ -1,8 +1,10 @@
 from pathlib import Path
+
 import pandas as pd
 
+
 # Directory of this file
-this_dir = Path(__file__).parent
+this_dir = Path(__file__).resolve().parent
 
 # Read in all files
 parts = []
@@ -51,7 +53,7 @@ with pd.ExcelWriter(this_dir / 'sales_report_xlsxwriter.xlsx',
     sheet.write(0, startcol, 'Sales Report', title_format)
 
     # Sheet formatting
-    # 2: hides on screen and when printing
+    # 2 = hide on screen and when printing
     sheet.hide_gridlines(2)
 
     # Format the DataFrame with

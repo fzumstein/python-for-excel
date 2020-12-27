@@ -8,7 +8,7 @@ TEMPERATURE_SCALES = ('fahrenheit', 'kelvin',
                       'celsius')
 
 
-class DummyClass:
+class TemperatureConverter:
     pass  # doesn't do anything at the moment
 
 

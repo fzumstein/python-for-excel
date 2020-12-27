@@ -2,8 +2,9 @@ from pathlib import Path
 
 import pandas as pd
 
+
 # Directory of this file
-this_dir = Path(__file__).parent
+this_dir = Path(__file__).resolve().parent
 
 # Read in all Excel files from all subfolders of sales_data
 parts = []
@@ -24,5 +25,5 @@ pivot = pd.pivot_table(df,
 summary = pivot.resample('M').sum()
 summary.index.name = 'Month'
 
-#### Write summary report to Excel file ####
+# Write summary report to Excel file
 summary.to_excel(this_dir / 'sales_report_pandas.xlsx')

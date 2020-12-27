@@ -1,9 +1,9 @@
 from functools import lru_cache
 
-import xlwings as xw
 import pandas as pd
 from pytrends.request import TrendReq
 import matplotlib.pyplot as plt
+import xlwings as xw
 
 
 @lru_cache()
@@ -18,21 +18,25 @@ def get_interest_over_time(mids, start_date, end_date):
     it returns "Python".
     """
     mids = mids.value
+
     # Check and transform parameters
     assert len(mids) <= 5, "Too many mids (max: 5)"
     start_date = start_date.date().isoformat()
     end_date = end_date.date().isoformat()
+
     # Make the Google Trends request and return the DataFrame
     trend = TrendReq(timeout=10)
     trend.build_payload(kw_list=mids,
                         timeframe=f'{start_date} {end_date}')
     df = trend.interest_over_time()
+
     # Replace Google's "mid" with a human readable word
     mids = {'/m/05z1_': 'Python', '/m/02p97': 'JavaScript',
             '/m/0jgqg': 'C++', '/m/07sbkfb': 'Java', '/m/060kv': 'PHP'}
     df = df.rename(columns=mids)
-    # Cut off the isPartial column
-    return df.iloc[:, :-1]
+
+    # Drop the isPartial column
+    return df.drop(columns='isPartial')
 
 
 @xw.func

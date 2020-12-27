@@ -1,6 +1,7 @@
 """This module offers a read and write function to get
 2-dimensional lists in and out of Excel files.
 """
+import re
 import itertools
 import datetime as dt
 
@@ -20,12 +21,10 @@ except ImportError:
     xlrd = None
 try:
     import xlwt
-    from xlwt.Utils import cell_to_rowcol2
 except ImportError:
     xlwt = None
 try:
     import xlsxwriter
-    from xlsxwriter.utility import xl_cell_to_rowcol
 except ImportError:
     xlsxwriter = None
 
@@ -59,10 +58,10 @@ def read(sheet, first_cell='A1', last_cell=None):
             last_cell = (sheet.nrows, sheet.ncols)
         # Transform 'A1' notation into tuples of 1-based indices
         if not isinstance(first_cell, tuple):
-            first_cell = xlwt.Utils.cell_to_rowcol2(first_cell)
+            first_cell = xl_cell_to_rowcol(first_cell)
             first_cell = (first_cell[0] + 1, first_cell[1] + 1)
         if not isinstance(last_cell, tuple):
-            last_cell = xlwt.Utils.cell_to_rowcol2(last_cell)
+            last_cell = xl_cell_to_rowcol(last_cell)
             last_cell = (last_cell[0] + 1, last_cell[1] + 1)
         values = []
         for r in range(first_cell[0] - 1, last_cell[0]):
@@ -110,9 +109,11 @@ def read(sheet, first_cell='A1', last_cell=None):
                   '0x17': '#REF!', '0x1d': '#NAME?', '0x24': '#NUM!',
                   '0x2a': '#N/A'}
         if not isinstance(first_cell, tuple):
-            first_cell = openpyxl.utils.coordinate_to_tuple(first_cell)
+            first_cell = xl_cell_to_rowcol(first_cell)
+            first_cell = (first_cell[0] + 1, first_cell[1] + 1)
         if last_cell and not isinstance(last_cell, tuple):
-            last_cell = openpyxl.utils.coordinate_to_tuple(last_cell)
+            last_cell = xl_cell_to_rowcol(last_cell)
+            last_cell = (last_cell[0] + 1, last_cell[1] + 1)
         data = []
         # sheet.rows() is a generator that requires islice to slice it
         for row in itertools.islice(sheet.rows(),
@@ -147,7 +148,7 @@ def write(sheet, values, first_cell='A1', date_format=None):
     """
     # OpenPyXL
     if openpyxl and isinstance(
-            sheet, (openpyxl.worksheet.worksheet.Worksheet)):
+            sheet, openpyxl.worksheet.worksheet.Worksheet):
         if date_format is None:
                 date_format = 'mm/dd/yy'
         if not isinstance(first_cell, tuple):
@@ -179,7 +180,7 @@ def write(sheet, values, first_cell='A1', date_format=None):
         if isinstance(first_cell, tuple):
             first_cell = (first_cell[0] - 1, first_cell[1] - 1)
         else:
-            first_cell = xlwt.Utils.cell_to_rowcol2(first_cell)
+            first_cell = xl_cell_to_rowcol(first_cell)
         for i, row in enumerate(values):
             for j, cell in enumerate(row):
                 if isinstance(cell, (dt.datetime, dt.date)):
@@ -190,3 +191,63 @@ def write(sheet, values, first_cell='A1', date_format=None):
                                 cell)
     else:
         raise TypeError(f"Couldn't handle sheet of type {type(sheet)}")
+
+
+def xl_cell_to_rowcol(cell_str):
+    """
+    Convert a cell reference in A1 notation to a zero indexed row and column.
+
+    Args:
+       cell_str:  A1 style string.
+
+    Returns:
+        row, col: Zero indexed cell row and column indices.
+
+    This function is from XlsxWriter
+    Copyright (c) 2013-2020, John McNamara <jmcnamara@cpan.org>
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this
+       list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions and the following disclaimer in the documentation
+       and/or other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+    ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    The views and conclusions contained in the software and documentation are those
+    of the authors and should not be interpreted as representing official policies,
+    either expressed or implied, of the FreeBSD Project.
+
+    """
+    if not cell_str:
+        return 0, 0
+
+    match = re.compile(r'(\$?)([A-Z]{1,3})(\$?)(\d+)').match(cell_str)
+    col_str = match.group(2)
+    row_str = match.group(4)
+
+    # Convert base26 column string to number.
+    expn = 0
+    col = 0
+    for char in reversed(col_str):
+        col += (ord(char) - ord('A') + 1) * (26 ** expn)
+        expn += 1
+
+    # Convert 1-index to zero-index
+    row = int(row_str) - 1
+    col -= 1
+
+    return row, col

@@ -29,7 +29,7 @@ except ImportError:
     xlsxwriter = None
 
 
-def read(sheet, first_cell='A1', last_cell=None):
+def read(sheet, first_cell="A1", last_cell=None):
     """Read a 2-dimensional list from an Excel range.
 
     Parameters
@@ -38,11 +38,11 @@ def read(sheet, first_cell='A1', last_cell=None):
         An xlrd, openpyxl or pyxlsb sheet object
     first_cell : str or tuple, optional
         Top-left corner of the Excel range you want to read.
-        Can be a string like 'A1' or a row/col tuple like (1, 1),
-        default is 'A1'.
+        Can be a string like "A1" or a row/col tuple like (1, 1),
+        default is "A1".
     last_cell : str or tuple, optional
         Bottom-right corner of the Excel range you want to read.
-        Can be a string like 'A1' or a row/col tuple like (1, 1),
+        Can be a string like "A1" or a row/col tuple like (1, 1),
         default is the bottom-right cell of the used range.
 
     Returns
@@ -56,7 +56,7 @@ def read(sheet, first_cell='A1', last_cell=None):
         if last_cell is None:
             # actual range with data, not used range
             last_cell = (sheet.nrows, sheet.ncols)
-        # Transform 'A1' notation into tuples of 1-based indices
+        # Transform "A1" notation into tuples of 1-based indices
         if not isinstance(first_cell, tuple):
             first_cell = xl_cell_to_rowcol(first_cell)
             first_cell = (first_cell[0] + 1, first_cell[1] + 1)
@@ -105,9 +105,9 @@ def read(sheet, first_cell='A1', last_cell=None):
 
     # pyxlsb
     elif pyxlsb and isinstance(sheet, pyxlsb.worksheet.Worksheet):
-        errors = {'0x0': '#NULL!', '0x7': '#DIV/0!', '0xf': '#VALUE!',
-                  '0x17': '#REF!', '0x1d': '#NAME?', '0x24': '#NUM!',
-                  '0x2a': '#N/A'}
+        errors = {"0x0": "#NULL!", "0x7": "#DIV/0!", "0xf": "#VALUE!",
+                  "0x17": "#REF!", "0x1d": "#NAME?", "0x24": "#NUM!",
+                  "0x2a": "#N/A"}
         if not isinstance(first_cell, tuple):
             first_cell = xl_cell_to_rowcol(first_cell)
             first_cell = (first_cell[0] + 1, first_cell[1] + 1)
@@ -126,7 +126,7 @@ def read(sheet, first_cell='A1', last_cell=None):
         raise TypeError(f"Couldn't handle sheet of type {type(sheet)}")
 
 
-def write(sheet, values, first_cell='A1', date_format=None):
+def write(sheet, values, first_cell="A1", date_format=None):
     """Write a 2-dimensional list to an Excel range.
 
     Parameters
@@ -138,19 +138,19 @@ def write(sheet, values, first_cell='A1', date_format=None):
         A 2-dimensional list of values
     first_cell : str or tuple, optional
         Top-left corner of the Excel range where you want to write out
-        the DataFrame. Can be a string like 'A1' or a row/col tuple
-        like (1, 1), default is 'A1'.
+        the DataFrame. Can be a string like "A1" or a row/col tuple
+        like (1, 1), default is "A1".
     date_format : str, optional
-        Only accepted if sheet is an openppyxl or xlwt sheet. By default,
-        formats dates in the following format: 'mm/dd/yy'. For xlsxwriter,
+        Only accepted if sheet is an openpyxl or xlwt sheet. By default,
+        formats dates in the following format: "mm/dd/yy". For xlsxwriter,
         set the format when you instantiate a Workbook by providing:
-        options={'default_date_format': 'mm/dd/yy'}
+        options={"default_date_format": "mm/dd/yy"}
     """
     # OpenPyXL
     if openpyxl and isinstance(
             sheet, openpyxl.worksheet.worksheet.Worksheet):
         if date_format is None:
-                date_format = 'mm/dd/yy'
+                date_format = "mm/dd/yy"
         if not isinstance(first_cell, tuple):
             first_cell = openpyxl.utils.coordinate_to_tuple(first_cell)
         for i, row in enumerate(values):
@@ -164,7 +164,7 @@ def write(sheet, values, first_cell='A1', date_format=None):
     # XlsxWriter
     elif xlsxwriter and isinstance(sheet, xlsxwriter.worksheet.Worksheet):
         if date_format is not None:
-            raise ValueError('date_format must be set as Workbook option')
+            raise ValueError("date_format must be set as Workbook option")
         if isinstance(first_cell, tuple):
             first_cell = first_cell[0] - 1, first_cell[1] - 1
         else:
@@ -175,7 +175,7 @@ def write(sheet, values, first_cell='A1', date_format=None):
     # xlwt
     elif xlwt and isinstance(sheet, xlwt.Worksheet):
         if date_format is None:
-            date_format = 'mm/dd/yy'
+            date_format = "mm/dd/yy"
         date_format = xlwt.easyxf(num_format_str=date_format)
         if isinstance(first_cell, tuple):
             first_cell = (first_cell[0] - 1, first_cell[1] - 1)
@@ -235,7 +235,7 @@ def xl_cell_to_rowcol(cell_str):
     if not cell_str:
         return 0, 0
 
-    match = re.compile(r'(\$?)([A-Z]{1,3})(\$?)(\d+)').match(cell_str)
+    match = re.compile(r"(\$?)([A-Z]{1,3})(\$?)(\d+)").match(cell_str)
     col_str = match.group(2)
     row_str = match.group(4)
 
@@ -243,7 +243,7 @@ def xl_cell_to_rowcol(cell_str):
     expn = 0
     col = 0
     for char in reversed(col_str):
-        col += (ord(char) - ord('A') + 1) * (26 ** expn)
+        col += (ord(char) - ord("A") + 1) * (26 ** expn)
         expn += 1
 
     # Convert 1-index to zero-index

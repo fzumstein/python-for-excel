@@ -23,16 +23,16 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 # We want the database file to sit next to this file.
 # Here, we are turning the path into an absolute path.
 this_dir = Path(__file__).resolve().parent
-db_path = this_dir / 'packagetracker.db'
+db_path = this_dir / "packagetracker.db"
 
 # Database engine
-engine = sqlalchemy.create_engine(f'sqlite:///{db_path}')
+engine = sqlalchemy.create_engine(f"sqlite:///{db_path}")
 
 
 def get_packages():
     """Get all packages as DataFrame"""
 
-    return pd.read_sql_table("packages", con=engine, index_col='package_id')
+    return pd.read_sql_table("packages", con=engine, index_col="package_id")
 
 
 def store_package(package_name):
@@ -44,7 +44,7 @@ def store_package(package_name):
                         package_name=package_name)
         return None
     except sqlalchemy.exc.IntegrityError:
-        return f'{package_name} already exists'
+        return f"{package_name} already exists"
     except Exception as e:
         return repr(e)
 
@@ -58,15 +58,15 @@ def get_versions(package_name):
     INNER JOIN package_versions v ON p.package_id = v.package_id
     WHERE p.package_name = :package_name
     """
-    return pd.read_sql_query(text(sql), engine, parse_dates=['uploaded_at'],
-                             params={'package_name': package_name},
-                             index_col=['uploaded_at'])
+    return pd.read_sql_query(text(sql), engine, parse_dates=["uploaded_at"],
+                             params={"package_name": package_name},
+                             index_col=["uploaded_at"])
 
 
 def store_versions(df):
     """Insert the records of the provided DataFrame df into the package_versions table"""
 
-    df.to_sql('package_versions', con=engine, if_exists='append', index=False)
+    df.to_sql("package_versions", con=engine, if_exists="append", index=False)
 
 
 def delete_versions():
@@ -105,6 +105,6 @@ def create_db():
             con.execute(sql)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Run this as a script to create the packagetracker.db database
     create_db()

@@ -13,7 +13,8 @@ this_dir = Path(__file__).resolve().parent
 
 # Read in all files
 parts = []
-for path in (this_dir / 'sales_data').rglob('*.xls*'):
+for path in (this_dir / "sales_data").rglob("*.xls*"):
+    print(f'Reading {path.name}')
     part = pd.read_excel(path)
     parts.append(part)
 
@@ -22,20 +23,20 @@ df = pd.concat(parts)
 
 # Pivot each store into a column and sum up all transactions per date
 pivot = pd.pivot_table(df,
-                       index='transaction_date', columns='store',
-                       values='amount', aggfunc='sum')
+                       index="transaction_date", columns="store",
+                       values="amount", aggfunc="sum")
 
 # Resample to end of month and assign an index name 
-summary = pivot.resample('M').sum()
-summary.index.name = 'Month'
+summary = pivot.resample("M").sum()
+summary.index.name = "Month"
 
-# Sort by total revenues per store
+# Sort columns by total revenues per store
 summary = summary.loc[:, summary.sum().sort_values().index]
 
-# Add row and column totals: Using 'append' together with 'rename'
+# Add row and column totals: Using "append" together with "rename"
 # is a convenient way to add a row to the bottom of a DataFrame
-summary.loc[:, 'Total'] = summary.sum(axis=1)
-summary = summary.append(summary.sum(axis=0).rename('Total'))
+summary.loc[:, "Total"] = summary.sum(axis=1)
+summary = summary.append(summary.sum(axis=0).rename("Total"))
 
 #### Write summary report to Excel file ####
 
@@ -44,18 +45,18 @@ summary = summary.append(summary.sum(axis=0).rename('Total'))
 startrow, startcol = 3, 2
 nrows, ncols = summary.shape
 
-with pd.ExcelWriter(this_dir / 'sales_report_openpyxl.xlsx',
-                    engine='openpyxl', write_only=True) as writer:
+with pd.ExcelWriter(this_dir / "sales_report_openpyxl.xlsx",
+                    engine="openpyxl", write_only=True) as writer:
     # pandas uses 0-based indices
-    summary.to_excel(writer, sheet_name='Sheet1',
+    summary.to_excel(writer, sheet_name="Sheet1",
                      startrow=startrow - 1, startcol=startcol - 1)
 
     # Get openpyxl book and sheet object 
     book = writer.book
-    sheet = writer.sheets['Sheet1']
+    sheet = writer.sheets["Sheet1"]
 
     # Set title
-    sheet.cell(row=1, column=startcol, value='Sales Report')
+    sheet.cell(row=1, column=startcol, value="Sales Report")
     sheet.cell(row=1, column=startcol).font = Font(size=24, bold=True)
 
     # Sheet formatting
@@ -68,11 +69,11 @@ with pd.ExcelWriter(this_dir / 'sales_report_openpyxl.xlsx',
     for row in range(startrow + 1, startrow + nrows + 1):
         for col in range(startcol + 1, startcol + ncols + 1):
             cell = sheet.cell(row=row, column=col)
-            cell.number_format = '#,##0'
-            cell.alignment = Alignment(horizontal='center')
+            cell.number_format = "#,##0"
+            cell.alignment = Alignment(horizontal="center")
 
-    for cell in sheet['B']:
-        cell.number_format = 'mmm yy'
+    for cell in sheet["B"]:
+        cell.number_format = "mmm yy"
 
     for col in range(startcol, startcol + ncols + 1):
         cell = sheet.cell(row=startrow, column=col)
@@ -80,12 +81,12 @@ with pd.ExcelWriter(this_dir / 'sales_report_openpyxl.xlsx',
 
     first_cell = sheet.cell(row=startrow + 1, column=startcol + 1)
     last_cell = sheet.cell(row=startrow + nrows, column=startcol + ncols)
-    range_address = f'{first_cell.coordinate}:{last_cell.coordinate}'
+    range_address = f"{first_cell.coordinate}:{last_cell.coordinate}"
     sheet.conditional_formatting.add(range_address,
-                                     CellIsRule(operator='lessThan',
-                                                formula=['20000'],
+                                     CellIsRule(operator="lessThan",
+                                                formula=["20000"],
                                                 stopIfTrue=True,
-                                                font=Font(color='E93423')))
+                                                font=Font(color="E93423")))
 
     # Chart
     chart = BarChart()
@@ -106,7 +107,7 @@ with pd.ExcelWriter(this_dir / 'sales_report_openpyxl.xlsx',
     sheet.add_chart(chart=chart, anchor=cell.coordinate)
 
     # Chart formatting
-    chart.y_axis.title = 'Sales'
+    chart.y_axis.title = "Sales"
     chart.x_axis.title = summary.index.name
     # Hide y-axis line: spPR stands for ShapeProperties 
     chart.y_axis.spPr = GraphicalProperties(ln=LineProperties(noFill=True))

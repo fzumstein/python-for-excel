@@ -25,7 +25,7 @@ pivot = pd.pivot_table(df,
 summary = pivot.resample("M").sum()
 summary.index.name = "Month"
 
-# Sort columns by total revenues per store
+# Sort columns by total revenue
 summary = summary.loc[:, summary.sum().sort_values().index]
 
 # Add row and column totals: Using "append" together with "rename"
@@ -78,7 +78,7 @@ with pd.ExcelWriter(this_dir / "sales_report_xlsxwriter.xlsx",
     chart = book.add_chart({"type": "column"})
     chart.set_title({"name": "Sales per Month and Store"})
     chart.set_size({"width": 830, "height": 450})
-    
+
     # Add each column as a series, ignoring total row and col
     for col in range(1, ncols):
         chart.add_series({
@@ -89,6 +89,7 @@ with pd.ExcelWriter(this_dir / "sales_report_xlsxwriter.xlsx",
             "values": ["Sheet1", startrow + 1, startcol + col,
                        startrow + nrows - 1, startcol + col],
         })
+
     # Chart formatting
     chart.set_x_axis({"name": summary.index.name,
                       "major_tick_mark": "none"})
@@ -96,6 +97,6 @@ with pd.ExcelWriter(this_dir / "sales_report_xlsxwriter.xlsx",
                       "line": {"none": True},
                       "major_gridlines": {"visible": True},
                       "major_tick_mark": "none"})
-    
+
     # Add the chart to the sheet
     sheet.insert_chart(startrow + nrows + 2, startcol, chart)

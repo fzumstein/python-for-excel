@@ -25,7 +25,7 @@ def get_interest_over_time(mids, start_date, end_date):
                         timeframe=f"{start_date} {end_date}")
     df = trend.interest_over_time()
 
-    # Replace Google's "mid" with a human readable word
+    # Replace Google's "mid" with a human-readable word
     mids = {"/m/05z1_": "Python", "/m/02p97": "JavaScript",
             "/m/0jgqg": "C++", "/m/07sbkfb": "Java", "/m/060kv": "PHP"}
     df = df.rename(columns=mids)

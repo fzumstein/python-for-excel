@@ -30,7 +30,7 @@ pivot = pd.pivot_table(df,
 summary = pivot.resample("M").sum()
 summary.index.name = "Month"
 
-# Sort columns by total revenues per store
+# Sort columns by total revenue
 summary = summary.loc[:, summary.sum().sort_values().index]
 
 # Add row and column totals: Using "append" together with "rename"

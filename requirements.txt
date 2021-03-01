@@ -2,10 +2,11 @@
 # Since Binder runs on Linux, xlwings can't be installed and is therefore commented out
 # If you don't use Anaconda, you can use this file to install all dependencies, just make sure
 # to first uncomment the line with xlwings, i.e., remove the "#" at the beginning of the line
-# Then install the dependencies like so:
+# Then install the dependencies like so from a Command Prompt or Terminal:
 #
 # pip install -r requirements.txt
 
+flake8==3.8.4
 lxml==4.6.2
 matplotlib==3.3.2
 notebook==6.1.5

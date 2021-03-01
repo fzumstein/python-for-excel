@@ -2,6 +2,7 @@ name: xl38
 channels:
   - defaults
 dependencies:
+  - flake8=3.8.4
   - lxml=4.6.1
   - matplotlib=3.3.2
   - notebook=6.1.4

@@ -19,7 +19,7 @@ BASE_URL = "https://pypi.org/pypi"
 
 def add_package():
     """ Adds a new package including the version history to the database.
-    Triggers an udpate of the dropdown on the Tracker tab.
+    Triggers an update of the dropdown on the Tracker tab.
     """
     # Excel objects
     db_sheet = xw.Book.caller().sheets["Database"]

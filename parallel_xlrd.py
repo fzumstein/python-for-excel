@@ -14,6 +14,7 @@ def _read_sheet(filename, sheetname):
         data = excel.read(sheet)
     return sheet.name, data
 
+
 def open_workbook(filename, sheetnames=None):
     if sheetnames is None:
         with xlrd.open_workbook(filename, on_demand=True) as book:

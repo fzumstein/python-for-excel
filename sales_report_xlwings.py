@@ -22,7 +22,7 @@ pivot = pd.pivot_table(df,
                        index="transaction_date", columns="store",
                        values="amount", aggfunc="sum")
 
-# Resample to end of month and assign an index name 
+# Resample to end of month and assign an index name
 summary = pivot.resample("M").sum()
 summary.index.name = "Month"
 
@@ -34,7 +34,7 @@ summary = summary.loc[:, summary.sum().sort_values().index]
 summary.loc[:, "Total"] = summary.sum(axis=1)
 summary = summary.append(summary.sum(axis=0).rename("Total"))
 
-#### Write summary report to Excel file ####
+#### Write summary report to Excel file ####    # noqa: E266
 
 # Open the template, paste the data, autofit the columns
 # and adjust the chart source. Then save it under a different name.

@@ -12,6 +12,7 @@ def _read_sheet(filename, sheet_name):
     df = pd.read_excel(filename, sheet_name=sheet_name, engine='openpyxl')
     return sheet_name, df
 
+
 def read_excel(filename, sheet_name=None):
     if sheet_name is None:
         book = openpyxl.load_workbook(filename,

@@ -22,7 +22,7 @@ pivot = pd.pivot_table(df,
                        index="transaction_date", columns="store",
                        values="amount", aggfunc="sum")
 
-# Resample to end of month and assign an index name 
+# Resample to end of month and assign an index name
 summary = pivot.resample("M").sum()
 summary.index.name = "Month"
 

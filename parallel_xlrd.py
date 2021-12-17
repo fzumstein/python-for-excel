@@ -7,12 +7,13 @@ import excel
 
 def _read_sheet(filename, sheetname):
     # The leading underscore in the function name is used by convention
-    # to mark it as "private", i.e. it shouldn't be used directly outside
+    # to mark it as "private", i.e., it shouldn't be used directly outside
     # of this module.
     with xlrd.open_workbook(filename, on_demand=True) as book:
         sheet = book.sheet_by_name(sheetname)
         data = excel.read(sheet)
     return sheet.name, data
+
 
 def open_workbook(filename, sheetnames=None):
     if sheetnames is None:

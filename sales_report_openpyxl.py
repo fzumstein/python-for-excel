@@ -26,7 +26,7 @@ pivot = pd.pivot_table(df,
                        index="transaction_date", columns="store",
                        values="amount", aggfunc="sum")
 
-# Resample to end of month and assign an index name 
+# Resample to end of month and assign an index name
 summary = pivot.resample("M").sum()
 summary.index.name = "Month"
 
@@ -45,13 +45,15 @@ summary = summary.append(summary.sum(axis=0).rename("Total"))
 startrow, startcol = 3, 2
 nrows, ncols = summary.shape
 
+# Starting with pandas 1.3.0, the following line will raise a FutureWarning.
+# To fix this, replace write_only=True with engine_kwargs={"write_only": True}
 with pd.ExcelWriter(this_dir / "sales_report_openpyxl.xlsx",
                     engine="openpyxl", write_only=True) as writer:
     # pandas uses 0-based indices
     summary.to_excel(writer, sheet_name="Sheet1",
                      startrow=startrow - 1, startcol=startcol - 1)
 
-    # Get openpyxl book and sheet object 
+    # Get openpyxl book and sheet object
     book = writer.book
     sheet = writer.sheets["Sheet1"]
 

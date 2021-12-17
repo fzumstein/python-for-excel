@@ -14,7 +14,7 @@ import xlwings as xw
 def get_interest_over_time(mids, start_date, end_date):
     """Query Google Trends - replaces the Machine ID (mid) of
     common programming languages with their human-readable
-    equivalent in the return value, e.g. instead of "/m/05z1_"
+    equivalent in the return value, e.g., instead of "/m/05z1_"
     it returns "Python".
     """
     mids = mids.value

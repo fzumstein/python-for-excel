@@ -132,7 +132,7 @@ def write(sheet, values, first_cell="A1", date_format=None):
     Parameters
     ----------
     sheet : object
-        An openpyxl, xlsxwriter or xlwt sheet object. openpyxl's 
+        An openpyxl, xlsxwriter or xlwt sheet object. openpyxl's
         write_only=True mode is not supported.
     values : list
         A 2-dimensional list of values
@@ -150,7 +150,7 @@ def write(sheet, values, first_cell="A1", date_format=None):
     if openpyxl and isinstance(
             sheet, openpyxl.worksheet.worksheet.Worksheet):
         if date_format is None:
-                date_format = "mm/dd/yy"
+            date_format = "mm/dd/yy"
         if not isinstance(first_cell, tuple):
             first_cell = openpyxl.utils.coordinate_to_tuple(first_cell)
         for i, row in enumerate(values):

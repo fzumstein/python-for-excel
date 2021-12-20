@@ -7,7 +7,7 @@ import excel
 
 def _read_sheet(filename, sheetname):
     # The leading underscore in the function name is used by convention
-    # to mark it as "private", i.e. it shouldn't be used directly outside
+    # to mark it as "private", i.e., it shouldn't be used directly outside
     # of this module.
     book = openpyxl.load_workbook(filename,
                                   read_only=True, data_only=True)

@@ -21,7 +21,7 @@ pivot = pd.pivot_table(df,
                        index="transaction_date", columns="store",
                        values="amount", aggfunc="sum")
 
-# Resample to end of month and assign an index name 
+# Resample to end of month and assign an index name
 summary = pivot.resample("M").sum()
 summary.index.name = "Month"
 
@@ -45,7 +45,7 @@ with pd.ExcelWriter(this_dir / "sales_report_xlsxwriter.xlsx",
     summary.to_excel(writer, sheet_name="Sheet1",
                      startrow=startrow, startcol=startcol)
 
-    # Get xlsxwriter book and sheet object 
+    # Get xlsxwriter book and sheet object
     book = writer.book
     sheet = writer.sheets["Sheet1"]
 
@@ -82,7 +82,7 @@ with pd.ExcelWriter(this_dir / "sales_report_xlsxwriter.xlsx",
     # Add each column as a series, ignoring total row and col
     for col in range(1, ncols):
         chart.add_series({
-             # [sheetname, first_row, first_col, last_row, last_col]
+            # [sheetname, first_row, first_col, last_row, last_col]
             "name": ["Sheet1", startrow, startcol + col],
             "categories": ["Sheet1", startrow + 1, startcol,
                            startrow + nrows - 1, startcol],

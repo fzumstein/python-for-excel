@@ -7,10 +7,11 @@ import openpyxl
 
 def _read_sheet(filename, sheet_name):
     # The leading underscore in the function name is used by convention
-    # to mark it as "private", i.e. it shouldn't be used directly outside
+    # to mark it as "private", i.e., it shouldn't be used directly outside
     # of this module.
     df = pd.read_excel(filename, sheet_name=sheet_name, engine='openpyxl')
     return sheet_name, df
+
 
 def read_excel(filename, sheet_name=None):
     if sheet_name is None:

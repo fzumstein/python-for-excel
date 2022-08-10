@@ -1,4 +1,6 @@
-"""This script shows a few PEP 8 rules.
+"""
+This script shows a few PEP 8 rules.
+Code
 """
 
 import datetime as dt
@@ -13,7 +15,8 @@ class TemperatureConverter:
 
 
 def convert_to_celsius(degrees, source="fahrenheit"):
-    """This function converts degrees Fahrenheit or Kelvin
+    """
+    This function converts degrees Fahrenheit or Kelvin
     into degrees Celsius.
     """
     if source.lower() == "fahrenheit":

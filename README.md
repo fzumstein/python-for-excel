@@ -5,4 +5,4 @@
 This is the companion repository for the O'Reilly book [Python for Excel](https://learning.oreilly.com/library/view/python-for-excel/9781492080992/).
 
 All notebooks can be run in the cloud except `ch09.ipynb` (requires a local installation of Excel):  
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fzumstein/python-for-excel/1st-edition)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fzumstein/python-for-excel/1st-edition?urlpath=tree)

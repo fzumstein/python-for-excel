@@ -1,8 +1,5 @@
-# This file is used by Binder: https://mybinder.org/v2/gh/fzumstein/python-for-excel/1st-edition
-# Since Binder runs on Linux, xlwings can't be installed and is therefore commented out
-# If you don't use Anaconda, you can use this file to install all dependencies, just make sure
-# to first uncomment the line with xlwings, i.e., remove the "#" at the beginning of the line
-# Then install the dependencies like so from a Command Prompt or Terminal:
+# If you don't use Anaconda, you can use this file to install all dependencies.
+# Run it like so from a Command Prompt or Terminal:
 #
 # pip install -r requirements.txt
 
@@ -21,7 +18,7 @@ sqlalchemy==1.3.20
 xlrd==1.2.0
 xlsxwriter==1.3.7
 xlutils==2.0.0
-# xlwings==0.20.8
+xlwings==0.20.8
 xlwt==1.3.0
 pytrends==4.7.3
 pyxlsb==1.0.6

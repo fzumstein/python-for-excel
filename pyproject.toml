@@ -1,0 +1,35 @@
+# pandas requires to add packages with this flag:
+# uv add mypackge --index-strategy unsafe-best-match
+# pandas itself has to be added like this (note that this can't be used for prod as the packages disappear again):
+# uv add "pandas>=3.0.0.dev0" --index-strategy unsafe-best-match --prerelease allow
+[project]
+name = "py4xl"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "black>=25.1.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.3",
+    "nltk>=3.9.1",
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.2",
+    "plotly>=6.2.0",
+    "ruff>=0.11.13",
+    "seaborn>=0.13.2",
+    "sqlalchemy>=2.0.43",
+    "ty>=0.0.1a17",
+    "wordcloud>=1.9.4",
+    "xlwings>=0.33.15",
+]
+
+[dependency-groups]
+dev = ["kaleido>=1.0.0"]
+
+# [tool.uv.sources]
+# pandas = { index = "pandas-nightly" }
+
+# [[tool.uv.index]]
+# name = "pandas-nightly"
+# url = "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple"

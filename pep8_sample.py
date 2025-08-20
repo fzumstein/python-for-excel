@@ -1,11 +1,13 @@
-"""This script shows a few PEP 8 rules.
-"""
+"""This script shows a few PEP 8 rules."""
 
 import datetime as dt
 
 
-TEMPERATURE_SCALES = ("fahrenheit", "kelvin",
-                      "celsius")
+TEMPERATURE_SCALES = (
+    "fahrenheit",
+    "kelvin",
+    "celsius",
+)
 
 
 class TemperatureConverter:
@@ -17,11 +19,12 @@ def convert_to_celsius(degrees, source="fahrenheit"):
     into degrees Celsius.
     """
     if source.lower() == "fahrenheit":
-        return (degrees-32) * (5/9)
+        return (degrees - 32) * (5 / 9)
     elif source.lower() == "kelvin":
         return degrees - 273.15
     else:
-        return f"Don't know how to convert from {source}"
+        # Exceptions will be introduced in Chapter 11
+        raise ValueError(f"Don't know how to convert from {source}")
 
 
 celsius = convert_to_celsius(44, source="fahrenheit")

@@ -1,8 +1,7 @@
-# Python for Excel (O'Reilly, 2021)
+This is the companion repository for the upcoming 2nd edition of [Python for Excel](https://learning.oreilly.com/library/view/python-for-excel/9781492080992/).
 
-<img src="https://github.com/fzumstein/python-for-excel/blob/1st-edition/images/cover.png?raw=true" width="350">
 
-This is the companion repository for the O'Reilly book [Python for Excel](https://learning.oreilly.com/library/view/python-for-excel/9781492080992/).
+**NOTE**: This is currently work-in-progress and will continuously be updated/changed until the final release of the book. 
 
-All notebooks can be run in the cloud except `ch09.ipynb` (requires a local installation of Excel):  
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fzumstein/python-for-excel/1st-edition?urlpath=tree)
+All notebooks except `ch09` (requires a local installation of Excel) can be run in the cloud:
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fzumstein/python-for-excel/2e)

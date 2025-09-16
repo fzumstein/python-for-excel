@@ -1,8 +1,0 @@
-# This is for for mybinder.org
-name: xl38
-channels:
-  - conda-forge
-dependencies:
-  - python=3.13.7
-  - pip:
-    - -r requirements.txt

@@ -1,10 +1,10 @@
-FROM python:3.13-slim
+FROM ghcr.io/astral-sh/uv:python3.13-trixie
 
-COPY requirements.txt .
+COPY .python-version .
+COPY pyproject.toml .
+COPY uv.lock .
 
-# install the notebook package
-RUN pip install --no-cache --upgrade pip && \
-    pip install --no-cache -r requirements.txt
+RUN uv sync --locked
 
 # create user with a home directory
 ARG NB_USER

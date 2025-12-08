@@ -1,4 +1,5 @@
-FROM ghcr.io/astral-sh/uv:python3.13-trixie
+# This Dockerfile is used for mybinder.org
+FROM ghcr.io/astral-sh/uv:python3.14-trixie
 
 COPY .python-version .
 COPY pyproject.toml .
@@ -6,7 +7,7 @@ COPY uv.lock .
 
 RUN uv sync --locked
 
-# create user with a home directory
+# Create user with a home directory
 ARG NB_USER=jovyan
 ARG NB_UID=1000
 ENV USER=${NB_USER}

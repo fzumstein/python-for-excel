@@ -1,0 +1,43 @@
+{
+  "latitude": 47.065025,
+  "longitude": 8.341463,
+  "generationtime_ms": 0.2008676528930664,
+  "utc_offset_seconds": 3600,
+  "timezone": "Europe/Zurich",
+  "timezone_abbreviation": "GMT+1",
+  "elevation": 478,
+  "daily_units": {
+    "time": "iso8601",
+    "temperature_2m_min": "°F",
+    "temperature_2m_max": "°F"
+  },
+  "daily": {
+    "time": [
+      "2025-12-13",
+      "2025-12-14",
+      "2025-12-15",
+      "2025-12-16",
+      "2025-12-17",
+      "2025-12-18",
+      "2025-12-19"
+    ],
+    "temperature_2m_min": [
+      32.2,
+      33.3,
+      20.2,
+      31.1,
+      33.1,
+      35.2,
+      37.2
+    ],
+    "temperature_2m_max": [
+      44.4,
+      39.9,
+      37.7,
+      39.9,
+      48.8,
+      39.4,
+      44.7
+    ]
+  }
+}

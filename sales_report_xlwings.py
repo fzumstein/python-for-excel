@@ -3,7 +3,6 @@ from pathlib import Path
 import pandas as pd
 import xlwings as xw
 
-
 # Directory of this file
 this_dir = Path(__file__).resolve().parent
 

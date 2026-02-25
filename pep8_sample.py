@@ -2,7 +2,6 @@
 
 import datetime as dt
 
-
 TEMPERATURE_SCALES = (
     "fahrenheit",
     "kelvin",

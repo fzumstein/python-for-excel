@@ -1,7 +1,8 @@
 import xlwings as xw
+from xlwings import script
 
 
-@xw.sub
+@script
 def main():
     wb = xw.Book.caller()
     sheet = wb.sheets[0]

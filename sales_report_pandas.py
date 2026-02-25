@@ -2,7 +2,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
 # Directory of this file
 this_dir = Path(__file__).resolve().parent
 

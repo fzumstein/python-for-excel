@@ -22,7 +22,7 @@ def convert_to_celsius(degrees, source="fahrenheit"):
     elif source.lower() == "kelvin":
         return degrees - 273.15
     else:
-        # Exceptions will be introduced in Chapter 11
+        # Exceptions will be introduced in Chapter 10
         raise ValueError(f"Don't know how to convert from {source}")
 
 

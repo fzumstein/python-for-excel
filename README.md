@@ -1,5 +1,5 @@
 > [!NOTE]
-> This is the material for the 1st edition (2021)! For the 2nd edition (June 2026), check out the [2nd edition repository](https://github.com/fzumstein/python-for-excel/tree/2e).
+> This is the material for the 1st edition (2021)! For the 2nd edition (June 2026), check out the [2e branch](https://github.com/fzumstein/python-for-excel/tree/2e).
 
 # Python for Excel (O'Reilly, 2021)
 

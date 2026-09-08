@@ -43,16 +43,24 @@ Aqui está o que cada um faz:
     matriz[inicio:fim:passo, inicio:fim:passo]
 '''
 
-print(array2)
-print("-"*30)
-print(array2[1, :2])
-print("-"*30)
-print(array2[:, 1:])
-print("-"*30)
-print(array2[:, 1])
+# print(array2)
+# print("-"*30)
+# print(array2[1, :2])
+# print("-"*30)
+# print(array2[:, 1:])
+# print("-"*30)
+# print(array2[:, 1])
 
-print("-"*30)
+# print("-"*30)
 
-print(np.arange(2 * 5).reshape(5, 2))
-print("-"*30)
+# print(np.arange(2 * 5).reshape(5, 2))
+# print("-"*30)
 print(np.random.rand(2, 3))
+
+import pandas as pd
+df = pd.read_excel("xl/course_participants.xlsx")
+print(df)
+df.info()
+df.index.name = "user_id"
+print(df)
+
